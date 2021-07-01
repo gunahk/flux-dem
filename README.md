@@ -1,2 +1,0 @@
-# flux-dem
-flux-demo
