@@ -4,7 +4,10 @@ metadata:
   name: nginx-deployment
   namespace: flux-system
   labels:
-    app: nginx
+    app: nginx  
+  annotations:
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.app: gunahk/flux-dem:main
 spec:
   replicas: 3
   selector:
@@ -14,9 +17,12 @@ spec:
     metadata:
       labels:
         app: nginx
+      annotations:
+        fluxcd.io/automated: "true"
+        fluxcd.io/tag.app: gunahk/flux-dem:main
     spec:
       containers:
       - name: nginx
-        image: gunahk/flux-dem:b5e9c6d4b3fed91d8682996eafaf75c55a8934f6
+        image: gunahk/flux-dem:main
         ports:
         - containerPort: 80
