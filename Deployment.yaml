@@ -7,7 +7,7 @@ metadata:
     app: nginx  
   annotations:
     fluxcd.io/automated: "true"
-    fluxcd.io/tag.app: docker.io/gunahk/flux-dem:test
+    fluxcd.io/tag.app: docker.io/gunahk/flux-dem:main
 spec:
   replicas: 3
   selector:
@@ -19,10 +19,10 @@ spec:
         app: nginx
       annotations:
         fluxcd.io/automated: "true"
-        fluxcd.io/tag.app: docker.io/gunahk/flux-dem:test
+        fluxcd.io/tag.app: docker.io/gunahk/flux-dem:main
     spec:
       containers:
       - name: nginx
-        image: docker.io/gunahk/flux-dem:test
+        image: docker.io/gunahk/flux-dem:main # {"$imagepolicy": "flux-system:dockerhub-tag-policy"}
         ports:
         - containerPort: 80
