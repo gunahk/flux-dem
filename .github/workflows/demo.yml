@@ -24,5 +24,5 @@ jobs:
         with:
           context: .
           push: true
-          tags: gunahk/flux-dem:main-${{ github.sha }}-$(date +'%Y-%m-%dT%H:%M:%S')
+          tags: gunahk/flux-dem:main-${{ github.sha }}
           labels: ${{ steps.meta.outputs.labels }}
