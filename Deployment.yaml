@@ -19,7 +19,7 @@ spec:
         app: nginx
       annotations:
         fluxcd.io/automated: "true"
-        fluxcd.io/tag.app: docker.io/gunahk/flux-dem:main
+        fluxcd.io/tag.app: docker.io/gunahk/flux-dem:b5e9c6d4b3fed91d8682996eafaf75c55a8934f6
     spec:
       containers:
       - name: nginx
