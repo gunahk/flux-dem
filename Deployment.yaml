@@ -23,6 +23,6 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: gunahk/flux-dem:b5e9c6d4b3fed91d8682996eafaf75c55a8934f6
+        image: nginx
         ports:
         - containerPort: 80
