@@ -7,7 +7,7 @@ metadata:
     app: nginx  
   annotations:
     fluxcd.io/automated: "true"
-    fluxcd.io/tag.app: docker.io/gunahk/flux-dem:main
+    fluxcd.io/tag.app: docker.io/gunahk/flux-dem:test
 spec:
   replicas: 3
   selector:
@@ -19,10 +19,10 @@ spec:
         app: nginx
       annotations:
         fluxcd.io/automated: "true"
-        fluxcd.io/tag.app: docker.io/gunahk/flux-dem:b5e9c6d4b3fed91d8682996eafaf75c55a8934f6
+        fluxcd.io/tag.app: docker.io/gunahk/flux-dem:test
     spec:
       containers:
       - name: nginx
-        image: httpd
+        image: docker.io/gunahk/flux-dem:test
         ports:
         - containerPort: 80
