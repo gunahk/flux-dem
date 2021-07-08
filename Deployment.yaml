@@ -23,6 +23,6 @@ spec:
     spec:
       containers:
         - name: nginx
-          image: docker.io/gunahk/flux-dem:main-ce0834ee47a7289e5c5555944284999109bed9d7 # {"$imagepolicy": "flux-system:dockerhub-tag-policy"}
+          image: docker.io/gunahk/flux-dem:main-d9263e4afe95fc2f7e9c8ae8f8c9029a1a1593be # {"$imagepolicy": "flux-system:dockerhub-tag-policy"}
           ports:
             - containerPort: 80
