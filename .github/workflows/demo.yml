@@ -1,28 +1,24 @@
-name: push to Docker Hub
-
+name: Manually triggered workflow
 on:
-  push:
-    branches:
-      - 'main'
-
+  workflow_dispatch:
+    inputs:
+      job:
+        description: 'Job to run.'
+        required: true
+        default: 'prod-deploy'
 jobs:
-  push_to_registry:
-    name: Push Docker image to Docker Hub
+  dev-deploy:
+    name: Deploy dev-deploy
     runs-on: ubuntu-latest
+    if: ${{ github.event.inputs.job == 'dev-deploy'}}
     steps:
-      - name: Check out the repo
-        uses: actions/checkout@v2
-      
-      - name: Log in to Docker Hub
-        uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      
-      - name: Build and push Docker image
-        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
-        with:
-          context: .
-          push: true
-          tags: gunahk/flux-dem:main-${{ github.sha }}
-          labels: ${{ steps.meta.outputs.labels }}
+    - name: ${{ github.event.inputs.job }} - step 1
+      run: echo "${{ github.event.inputs.job }} triggered!"
+
+  prod-deploy:
+    name: Deploy prod-deploy
+    runs-on: ubuntu-latest
+    if: ${{ github.event.inputs.job == 'prod-deploy'}}
+    steps:
+    - name: ${{ github.event.inputs.job }} - step 1
+      run: echo "${{ github.event.inputs.job }} triggered!"
