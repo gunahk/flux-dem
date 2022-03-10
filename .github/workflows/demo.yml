@@ -17,17 +17,16 @@ jobs:
       run: |
         echo "::set-output name=IMAGE_TAG::$IMAGE_TAG"
         echo ::set-output name=push_commit_message::$(git log --format=%B -n 1 HEAD)
-
-      - name: "[Push] Get commit message"
-        id: commit
-        if: github.event_name == 'push'
-        id: push_get_commit_message
-        run:
-          echo ::set-output name=push_commit_message::$(git log --format=%B -n 1 HEAD)
+  
+    - name: "[Push] Get commit message"
+      if: github.event_name == 'push'
+      id: push_get_commit_message
+      run:
+        echo ::set-output name=push_commit_message::$(git log --format=%B -n 1 HEAD)
 
     outputs:
       IMAGE_TAG: "${{ steps.prep.outputs.IMAGE_TAG }}"
-      COMMIT_MESSAGE: "${{ steps.commit.outputs.push_commit_message }}"
+      COMMIT_MESSAGE: "${{ steps.push_get_commit_message.outputs.push_commit_message }}"
 
   prod-deploy:
     name: Deploy-prod-deploy
