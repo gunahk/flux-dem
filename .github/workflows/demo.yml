@@ -15,7 +15,7 @@ jobs:
       env: 
         IMAGE_TAG: ${GITHUB_REF##*/}-${GITHUB_SHA::4}-$(TZ=":Asia/Kolkata" date +%Y-%m-%d-%H-%M-%S)
       run: |
-        echo "::set-output name=image_tag::$IMAGE_TAG"
+        echo "::set-output name=IMAGE_TAG::$IMAGE_TAG"
     outputs:
       IMAGE_TAG: "${{ steps.prep.outputs.IMAGE_TAG }}"
 
