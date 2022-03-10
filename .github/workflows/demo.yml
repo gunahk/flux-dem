@@ -18,6 +18,8 @@ jobs:
         time_stamp=$(TZ=":Asia/Kolkata" date +%Y-%m-%d-%H-%M-%S)
         echo "::set-output name=BUILD_ID::${branch}-${git_sha}-${time_stamp}"
         echo "BUILD_ID=${branch}-${git_sha}-${time_stamp}" >> $GITHUB_ENV
+        echo ${BUILD_ID}
+        cat  $GITHUB_ENV
 
   prod-deploy:
     name: Deploy-prod-deploy
@@ -28,3 +30,4 @@ jobs:
       id: prep
       run: |
         echo ${BUILD_ID}
+        cat $GITHUB_ENV
