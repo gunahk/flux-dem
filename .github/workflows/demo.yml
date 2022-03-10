@@ -9,7 +9,6 @@ jobs:
   dev-deploy:
     name: Deploy dev-deploy
     runs-on: ubuntu-latest
-    if: ${{ github.event.inputs.job == 'yaml'}}
     steps:
     - name: ${{ github.event.inputs.job }} - step 1
       run: echo "${{ github.event.inputs.job }} triggered!"
@@ -17,7 +16,6 @@ jobs:
   prod-deploy:
     name: Deploy prod-deploy
     runs-on: ubuntu-latest
-    if: ${{ github.event.inputs.job == 'main'}}
     steps:
     - name: ${{ github.event.inputs.job }} - step 1
       run: echo "${{ github.event.inputs.job }} triggered!"
