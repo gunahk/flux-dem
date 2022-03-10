@@ -41,7 +41,6 @@ jobs:
         echo "+++++++++++++++"
         echo ${{ needs.dev-deploy.outputs.IMAGE_TAG }}
 
-
     - name: with out commit ID
       if: "!contains(needs.dev-deploy.outputs.commit_message, '[skip ci]')"
       id: prep
