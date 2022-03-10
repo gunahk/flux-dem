@@ -33,4 +33,4 @@ jobs:
       id: prep
       run: |
         echo "+++++++++++++++"
-        echo ${{ dev-deploy.outputs.BUILD_ID }}
+        echo ${{ needs.dev-deploy.outputs.BUILD_ID }}
