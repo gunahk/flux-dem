@@ -1,11 +1,10 @@
 name: Manually triggered workflow
+
 on:
-  workflow_dispatch:
-    inputs:
-      job:
-        description: 'Job to run.'
-        required: true
-        default: 'prod-deploy'
+  push:
+    branches:
+      - main
+
 jobs:
   dev-deploy:
     name: Deploy dev-deploy
