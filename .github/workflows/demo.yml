@@ -34,7 +34,7 @@ jobs:
     needs: dev-deploy
     steps:
     - name: with commit ID
-      if: "contains(needs.dev-deploy.outputs.COMMIT_MESSAGE, '[skip ci]')"
+      if: "contains(needs.dev-deploy.outputs.COMMIT_MESSAGE, '[skip BG]')"
       id: commit_id_present
       run: |
         echo "+++++++++++++++"
