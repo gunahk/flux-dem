@@ -12,13 +12,24 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event.inputs.job == 'yaml'}}
     steps:
-    - name: ${{ github.event.inputs.job }} - step 1
-      run: echo "${{ github.event.inputs.job }} triggered!"
+    - name: Generate build ID
+      id: prep
+      run: |
+        branch=${GITHUB_REF##*/}
+        git_sha=${GITHUB_SHA::4}
+        time_stamp=$(TZ=":Asia/Kolkata" date +%Y-%m-%d-%H-%M-%S)
+        echo "::set-output name=BUILD_ID::${branch}-${git_sha}-${time_stamp}"
+        echo "IMAGE_TAG=${branch}-${git_sha}-${time_stamp}" >> $GITHUB_ENV
+
 
   prod-deploy:
     name: Deploy prod-deploy
     runs-on: ubuntu-latest
-    if: ${{ github.event.inputs.job == 'main'}}
+    if: ${{ github.event.inputs.job == 'yaml'}}
+    needs: dev-deploy
     steps:
-    - name: ${{ github.event.inputs.job }} - step 1
-      run: echo "${{ github.event.inputs.job }} triggered!"
+    - name: Generate build ID
+      id: prep
+      run: |
+        echo ${IMAGE_TAG}
+        
