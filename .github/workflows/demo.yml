@@ -16,11 +16,15 @@ jobs:
         branch=${GITHUB_REF##*/}
         git_sha=${GITHUB_SHA::4}
         time_stamp=$(TZ=":Asia/Kolkata" date +%Y-%m-%d-%H-%M-%S)
-        echo "::set-output name=BUILD_ID::${branch}-${git_sha}-${time_stamp}"
         echo "BUILD_ID=${branch}-${git_sha}-${time_stamp}">>${GITHUB_ENV}
         echo "+++++++++++++++"
         echo ${BUILD_ID}
         echo "+++++++++++++++"
+        echo "::set-output name=BUILD_ID::${branch}-${git_sha}-${time_stamp}"
+        echo "+++++++++++++++"
+        echo ${BUILD_ID}
+        echo "+++++++++++++++"
+          
     outputs:
       BUILD_ID: "${{ steps.prep.outputs.BUILD_ID }}"
 
