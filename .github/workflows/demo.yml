@@ -52,7 +52,7 @@ jobs:
         #echo ${{ needs.dev-deploy.outputs.COMMIT_MESSAGE }}
         
     - name: with out commit ID
-      if: "!contains(needs.dev-deploy.outputs.COMMIT_MESSAGE, '[skip BG]')"
+      if: "!contains(steps.push_get_commit_message.outputs.COMMIT_MESSAGE, '[skip BG]')"
       id: commit_id_not_present
       run: |
         echo "+++++++++++++++"
