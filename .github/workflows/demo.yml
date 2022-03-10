@@ -21,7 +21,7 @@ jobs:
         echo "+++++++++++++++"
         echo ${BUILD_ID}
         echo "+++++++++++++++"
-        echo  $GITHUB_ENV
+        echo  ${{ GITHUB_ENV }}
     outputs:
       BUILD_ID: "${{ steps.prep.outputs.BUILD_ID }}"
 
@@ -33,6 +33,6 @@ jobs:
     - name: Generate build ID
       id: prep
       run: |
-        echo  $GITHUB_ENV
+        echo  ${{ GITHUB_ENV }}
         echo "+++++++++++++++"
-        echo $needs.dev-deploy.outputs.BUILD_ID
+        echo ${{ dev-deploy.outputs.BUILD_ID }}
