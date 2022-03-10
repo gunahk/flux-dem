@@ -32,12 +32,12 @@ jobs:
   prod-deploy:
     name: Deploy-prod-deploy
     runs-on: ubuntu-latest
-    needs: dev-deploy
+    #needs: dev-deploy
     steps:
     - name: "[Push] Get commit message"
       id: push_get_commit_message
       run:
-        echo ::set-output name=push_commit_message::$(git log --format=%B -n 1 HEAD)
+        echo ::set-output name=COMMIT_MESSAGE::$(git log --format=%B -n 1 HEAD)
     
     - name: with commit ID
       if: "contains(steps.push_get_commit_message.outputs.COMMIT_MESSAGE, '[skip BG]')"
