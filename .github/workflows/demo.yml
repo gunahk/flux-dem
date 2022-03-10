@@ -34,14 +34,14 @@ jobs:
     steps:
     - name: with commit ID
       if: "contains(needs.dev-deploy.outputs.COMMIT_MESSAGE, '[skip ci]')"
-      id: commit id present
+      id: commit_id_present
       run: |
         echo "+++++++++++++++"
         echo ${{ needs.dev-deploy.outputs.IMAGE_TAG }}
 
     - name: with out commit ID
       if: "!contains(needs.dev-deploy.outputs.COMMIT_MESSAGE, '[skip ci]')"
-      id: commit id not present
+      id: commit_id_not_present
       run: |
         echo "+++++++++++++++"
         echo ${{ needs.dev-deploy.outputs.IMAGE_TAG }}
