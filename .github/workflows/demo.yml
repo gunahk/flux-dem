@@ -12,21 +12,12 @@ jobs:
     steps:
     - name: Generate build ID
       id: prep
+      env: 
+        IMAGE_TAG: ${{ GITHUB_REF##*/ }}-${{ GITHUB_SHA::4 }}-$(TZ=":Asia/Kolkata" date +%Y-%m-%d-%H-%M-%S)
       run: |
-        branch=${GITHUB_REF##*/}
-        git_sha=${GITHUB_SHA::4}
-        time_stamp=$(TZ=":Asia/Kolkata" date +%Y-%m-%d-%H-%M-%S)
-        echo "BUILD_ID=${branch}-${git_sha}-${time_stamp}">>${GITHUB_ENV}
-        echo "+++++++++++++++"
-        echo ${BUILD_ID}
-        echo "+++++++++++++++"
-        echo "::set-output name=BUILD_ID::${branch}-${git_sha}-${time_stamp}"
-        echo "+++++++++++++++"
-        echo ${BUILD_ID}
-        echo "+++++++++++++++"
-          
+        echo "::set-output name=image_tag::$IMAGE_TAG"
     outputs:
-      BUILD_ID: "${{ steps.prep.outputs.BUILD_ID }}"
+      IMAGE_TAG: "${{ steps.prep.outputs.IMAGE_TAG }}"
 
   prod-deploy:
     name: Deploy-prod-deploy
@@ -37,4 +28,4 @@ jobs:
       id: prep
       run: |
         echo "+++++++++++++++"
-        echo ${{ needs.dev-deploy.outputs.BUILD_ID }}
+        echo ${{ needs.dev-deploy.outputs.IMAGE_TAG }}
