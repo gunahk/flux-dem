@@ -17,8 +17,11 @@ jobs:
       env: 
         IMAGE_TAG: ${GITHUB_REF##*/}-${GITHUB_SHA::7}-$(TZ=":Asia/Kolkata" date +%Y-%m-%d-%H-%M-%S)
       run: |
+        echo $IMAGE_TAG=${GITHUB_REF##*/}-${GITHUB_SHA::7}-$(TZ=":Asia/Kolkata" date +%Y-%m-%d-%H-%M-%S)>>$GITHUB_ENV
         echo $IMAGE_TAG
+        echo ${{ env.IMAGE_TAG }}
         IMAGE_TAG=${IMAGE_TAG}
+        echo $IMAGE_TAG
         echo "docker build -t $IMAGE_TAG"
         echo "::set-output name=IMAGE_TAG::$IMAGE_TAG"
         #echo ::set-output name=push_commit_message::$(git log --format=%B -n 1 HEAD)
