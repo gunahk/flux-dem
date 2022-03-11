@@ -20,7 +20,7 @@ jobs:
     - name: Generate build ID
       id: prep
       env: 
-        IMAGE_TAG: ${{ IMAGE_TAG }}
+        IMAGE_TAG: ${{ env.IMAGE_TAG }}
       run: |
         echo $IMAGE_TAG
         echo "docker build -t $IMAGE_TAG"
