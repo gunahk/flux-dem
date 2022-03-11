@@ -8,55 +8,56 @@ on:
 
 
 jobs:
-#   dev-deploy:
-#     name: Deploy-dev-deploy
-#     runs-on: ubuntu-latest
-#     steps:
-#     - name: Generate build ID
-#       id: prep
-#       env: 
-#         IMAGE_TAG: ${GITHUB_REF##*/}-${GITHUB_SHA::7}-$(TZ=":Asia/Kolkata" date +%Y-%m-%d-%H-%M-%S)
-#       run: |
-#         echo "::set-output name=IMAGE_TAG::$IMAGE_TAG"
-#         echo ::set-output name=push_commit_message::$(git log --format=%B -n 1 HEAD)
-  
-#     - name: "[Push] Get commit message"
-#       id: push_get_commit_message
-#       run:
-#         echo ::set-output name=push_commit_message::$(git log --format=%B -n 1 HEAD)
-
-#     outputs:
-#       IMAGE_TAG: "${{ steps.prep.outputs.IMAGE_TAG }}"
-#       COMMIT_MESSAGE: "${{ steps.push_get_commit_message.outputs.push_commit_message }}"
-
-  prod-deploy:
-    name: Deploy-prod-deploy
+  dev-deploy:
+    name: Deploy-dev-deploy
     runs-on: ubuntu-latest
-    #needs: dev-deploy
     steps:
-    - name: checkout
-      uses: actions/checkout@v1
-      
+    - name: Generate build ID
+      id: prep
+      env: 
+        IMAGE_TAG: ${GITHUB_REF##*/}-${GITHUB_SHA::7}-$(TZ=":Asia/Kolkata" date +%Y-%m-%d-%H-%M-%S)
+      run: |
+        echo "::set-output name=IMAGE_TAG::$IMAGE_TAG"
+        echo ::set-output name=push_commit_message::$(git log --format=%B -n 1 HEAD)
+        echo "docker build -t $IMAGE_TAG"
+  
     - name: "[Push] Get commit message"
       id: push_get_commit_message
       run:
-        echo ::set-output name=COMMIT_MESSAGE::$(git log --format=%B -n 1 HEAD)
-    
-    - name: with commit ID
-      if: "contains(steps.push_get_commit_message.outputs.COMMIT_MESSAGE, '[skip BG]')"
-      id: commit_id_present
-      run: |
-        echo "+++++++++++++++"
         echo ::set-output name=push_commit_message::$(git log --format=%B -n 1 HEAD)
-        #echo ${{ needs.dev-deploy.outputs.IMAGE_TAG }}
-        #echo ${{ needs.dev-deploy.outputs.COMMIT_MESSAGE }}
+
+    outputs:
+      IMAGE_TAG: "${{ steps.prep.outputs.IMAGE_TAG }}"
+      COMMIT_MESSAGE: "${{ steps.push_get_commit_message.outputs.push_commit_message }}"
+
+#   prod-deploy:
+#     name: Deploy-prod-deploy
+#     runs-on: ubuntu-latest
+#     #needs: dev-deploy
+#     steps:
+#     - name: checkout
+#       uses: actions/checkout@v1
+      
+#     - name: "[Push] Get commit message"
+#       id: push_get_commit_message
+#       run:
+#         echo ::set-output name=COMMIT_MESSAGE::$(git log --format=%B -n 1 HEAD)
+    
+#     - name: with commit ID
+#       if: "contains(steps.push_get_commit_message.outputs.COMMIT_MESSAGE, '[skip BG]')"
+#       id: commit_id_present
+#       run: |
+#         echo "+++++++++++++++"
+#         echo ::set-output name=push_commit_message::$(git log --format=%B -n 1 HEAD)
+#         #echo ${{ needs.dev-deploy.outputs.IMAGE_TAG }}
+#         #echo ${{ needs.dev-deploy.outputs.COMMIT_MESSAGE }}
         
         
-    - name: with out commit ID
-      if: "!contains(steps.push_get_commit_message.outputs.COMMIT_MESSAGE, '[skip BG]')"
-      id: commit_id_not_present
-      run: |
-        echo "+++++++++++++++"
-        echo ${{ needs.dev-deploy.outputs.IMAGE_TAG }}
-        echo ${{ needs.dev-deploy.outputs.COMMIT_MESSAGE }}
+#     - name: with out commit ID
+#       if: "!contains(steps.push_get_commit_message.outputs.COMMIT_MESSAGE, '[skip BG]')"
+#       id: commit_id_not_present
+#       run: |
+#         echo "+++++++++++++++"
+#         echo ${{ needs.dev-deploy.outputs.IMAGE_TAG }}
+#         echo ${{ needs.dev-deploy.outputs.COMMIT_MESSAGE }}
 
