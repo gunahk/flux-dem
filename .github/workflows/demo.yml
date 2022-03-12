@@ -13,8 +13,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Generate build ID
-      if: ${{ github.event.label.name == 'skip-BG' }}
       id: prepasdfdf
+      run: |
+        echo ${{ github.event.label.name }}
+        
+        
+    - name: Generate build ID
+      if: ${{ github.event.label.name == 'skip-BG' }}
+      id: prepasasdfsfff
       run: |
         echo ${{ github.event.label.name }}
     
