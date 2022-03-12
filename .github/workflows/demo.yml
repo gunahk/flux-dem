@@ -16,8 +16,15 @@ jobs:
       id: prepasdfdf
       run: |
         echo ${{ github.event.label.name }}
-        
-        
+
+
+    - name: Dump GitHub context
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: |
+        echo "$GITHUB_CONTEXT"
+        echo "${{ toJson(github.event.pull_request.labels.*.name) }}"
+      
     - name: Generate build ID
       if: contains(github.event.pull_request.labels.*.name, 'skip-BG')
       id: prepasasdfsfff
