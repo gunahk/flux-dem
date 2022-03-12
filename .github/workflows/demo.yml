@@ -19,7 +19,7 @@ jobs:
         
         
     - name: Generate build ID
-      if: ${{ github.event.label.name == 'skip-BG' }}
+      if: contains(github.event.pull_request.labels.*.name, 'skip-BG')
       id: prepasasdfsfff
       run: |
         echo ${{ github.event.label.name }}
