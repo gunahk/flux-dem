@@ -19,14 +19,23 @@ jobs:
 
 
     - name: Dump GitHub context
+      if: endsWith(github.ref, '/deploy-develop')
       env:
         GITHUB_CONTEXT: ${{ toJson(github) }}
       run: |
         echo "$GITHUB_CONTEXT"
         echo "${{ toJson(github.event.pull_request.labels.*.name) }}"
       
+    - name: Check PR labels action step
+      id: check_pr_labels
+      if: endsWith(github.ref, '/main')
+      uses: shioyang/check-pr-labels-on-push-action@v1.0.3
+      with:
+        github-token: ${{ env.HELM_GIT_SECRET }}
+        labels: '["skip-blue-green"]'
+
     - name: Generate build ID
-      if: contains(github.event.pull_request.labels.*.name, 'skip-BG')
+      if: endsWith(github.ref, '/main') && steps.check_pr_labels.outputs.result == 'true'
       id: prepasasdfsfff
       run: |
         echo ${{ github.event.label.name }}
