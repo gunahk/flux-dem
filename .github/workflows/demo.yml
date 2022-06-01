@@ -37,5 +37,12 @@ jobs:
       run: |
         echo ${{ github.event.label.name }}
         echo "you are correct"
+        
+    - name: Generate build ID
+      if: endsWith(github.ref, '/develop') && steps.check_pr_labels.outputs.result == 'true'
+      id: prepasasdfsfff
+      run: |
+        echo ${{ github.event.label.name }}
+        echo "you are correct"
     
     
