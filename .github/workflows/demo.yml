@@ -28,7 +28,7 @@ jobs:
       if: endsWith(github.ref, '/main')
       uses: shioyang/check-pr-labels-on-push-action@v1.0.3
       with:
-        github-token: ${{ env.HELM_GIT_SECRET }}
+        github-token: ${{ secrets.HELM_GIT_SECRET }}
         labels: '["skip-blue-green"]'
 
     - name: Generate build ID
