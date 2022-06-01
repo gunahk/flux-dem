@@ -5,8 +5,6 @@ on:
     branches:
       - main
 
-
-
 jobs:
   dev-deploy:
     name: Deploy-dev-deploy
@@ -39,5 +37,6 @@ jobs:
       id: prepasasdfsfff
       run: |
         echo ${{ github.event.label.name }}
+        echo "you are correct"
     
     
