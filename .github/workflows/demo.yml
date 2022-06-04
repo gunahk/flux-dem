@@ -15,34 +15,23 @@ jobs:
       run: |
         echo ${{ github.event.label.name }}
 
-    - name: Dump GitHub context
-      if: endsWith(github.ref, '/deploy-develop')
-      env:
-        GITHUB_CONTEXT: ${{ toJson(github) }}
-      run: |
-        echo "$GITHUB_CONTEXT"
-        echo "${{ toJson(github.event.pull_request.labels.*.name) }}"
-      
-    - name: Check PR labels action step
-      id: check_pr_labels
-      if: endsWith(github.ref, '/main')
-      uses: shioyang/check-pr-labels-on-push-action@v1.0.3
-      with:
-        github-token: ${{ secrets.HELM_GIT_SECRET }}
-        labels: '["skip-blue-green"]'
 
-    - name: Generate build ID
-      if: endsWith(github.ref, '/main') && steps.check_pr_labels.outputs.result == 'true'
-      id: prepasasdfsfff
+    - name: build image 
+      id: build-image
+      env:
+          ECR_REPOSITORY: ECR_REPOSITORY
+          ECR_REGISTRY: ECR_REGISTRY
+          IMAGE_TAG: IMAGE_TAG
       run: |
-        echo ${{ github.event.label.name }}
-        echo "you are correct"
-        
-    - name: test develop
-      if: endsWith(github.ref, '/develop') && steps.check_pr_labels.outputs.result == 'true'
-      id: develop_test
+          echo "docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG ."
+          IMAGE_NAME=::add-mask::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          echo "::set-output name=IMAGE_NAME::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          echo "::set-output name=IMAGE_TAG::$IMAGE_TAG"
+          
+    - name: push image 
+      id: push-image
       run: |
-        echo ${{ github.event.label.name }}
-        echo "you are correct"
-    
-    
+          echo IMAGE_NAME=${IMAGE_NAME}
+          echo "docker push ${IMAGE_NAME}"
+          echo "::set-output name=IMAGE_NAME::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          echo "::set-output name=IMAGE_TAG::$IMAGE_TAG"
