@@ -24,14 +24,13 @@ jobs:
           IMAGE_TAG: IMAGE_TAG
       run: |
           echo "docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG ."
-          IMAGE_NAME=::add-mask::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          echo "::set-output name=IMAGE_NAME::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
-          echo "::set-output name=IMAGE_TAG::$IMAGE_TAG"
+          IMAGE_NAME=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          echo "::set-output name=IMAGE_NAME_OUTPUT::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          
           
     - name: push image 
       id: push-image
       run: |
+          echo "steps.build-image.outputs.IMAGE_NAME_OUTPUT"
           echo IMAGE_NAME=${IMAGE_NAME}
           echo "docker push ${IMAGE_NAME}"
-          echo "::set-output name=IMAGE_NAME::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
-          echo "::set-output name=IMAGE_TAG::$IMAGE_TAG"
